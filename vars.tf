@@ -13,6 +13,5 @@ variable "zone" {
 variable "environment" {
   description = "the environment that you are targetting"
 }
-variable "default_user_name" {
-  default = "dwaihcl"
-}
+variable "default_user_name" {}
+variable "projectname" {}
