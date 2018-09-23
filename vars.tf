@@ -3,11 +3,11 @@ variable "default_machine_type" {
 }
 
 variable "region" {
-  default = "us-central1"
+  default = "europe-west2"
 }
 
 variable "zone" {
-  default = "us-central1-a"
+  default = "europe-west2-a"
 }
 
 variable "environment" {
