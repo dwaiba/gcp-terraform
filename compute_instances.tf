@@ -45,3 +45,7 @@ resource "google_compute_instance" "web" {
 output "public_ip" {
   value = "${google_compute_instance.web.0.network_interface.0.access_config.0.assigned_nat_ip}"
 }
+
+output "connect_vm_${var.default_user_name}" {
+  value = "gcloud compute ssh ${google_compute_instance.web.0.name} --zone ${var.zone}"
+}
