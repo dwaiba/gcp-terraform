@@ -50,3 +50,7 @@ output "public_ip" {
 output "connect_vm" {
   value = "gcloud compute ssh ${google_compute_instance.web.0.name} --zone ${var.zone}"
 }
+output "startup_script_check" {
+  value = "sudo tail -100f /var/log/messages"
+}
+
