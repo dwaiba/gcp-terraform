@@ -1,5 +1,6 @@
 resource "google_compute_disk" "default" {
-  name = "${var.environment}-${format("disk-%03d", google_compute_instance.web.count.index + 1)}"
+  count        = 1
+  name = "${var.environment}-${format("disk-%03d", google_compute_disk.default.count.index + 1)}"
   type = "pd-ssd"
   zone = "${var.zone}"
   size = "${var.disk_default_size}"
