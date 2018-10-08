@@ -1,8 +1,8 @@
 resource "google_compute_disk" "default" {
-  name = "test-disk"
+  name = "${var.environment}-${format("disk-%03d", google_compute_instance.web.count.index + 1)}"
   type = "pd-ssd"
   zone = "${var.zone}"
-  size = 50
+  size = "${var.disk_default_size}"
 }
 
 resource "google_compute_instance" "web" {
@@ -43,7 +43,7 @@ resource "google_compute_instance" "web" {
 }
 
 output "public_ip" {
-  value = "${google_compute_instance.web.0.network_interface.0.access_config.0.assigned_nat_ip}"
+  value = "add your ssh key to ~/.ssh/authorized_keys of the ${default_user_name} user post connecting to vm ${google_compute_instance.web.0.name}  and public ip connection would be enabled via ssh -i privatekey ${default_user_name}@${google_compute_instance.web.0.network_interface.0.access_config.0.assigned_nat_ip}"
 }
 
 output "connect_vm" {

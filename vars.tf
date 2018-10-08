@@ -11,7 +11,11 @@ variable "zone" {
 }
 
 variable "environment" {
-  description = "the environment that you are targetting"
+  description = "The environment that you are targetting- Instance names and disk names are computed based upon environ. name"
+}
+
+variable "disk_default_size" {
+  description = "The Disk Size in GB to be attached and available at /data as mounted ext4 fs on lvm - recommended 50 or 100"
 }
 
 variable "default_user_name" {
