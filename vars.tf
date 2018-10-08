@@ -21,5 +21,10 @@ variable "disk_default_size" {
 variable "default_user_name" {
   description = "The username with which you intend to perform gcloud compute ssh on success provisioning thus syncing ssh keys"
 }
-
+/**
+variable "number_instances_with_disks"
+{
+  description = "Number of instances each with disks attached wanted - 1, 2, 4 or ..."
+}
+**/
 variable "projectname" {}

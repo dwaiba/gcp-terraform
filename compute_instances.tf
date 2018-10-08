@@ -1,6 +1,5 @@
 resource "google_compute_disk" "default" {
-  count        = 1
-  name = "${var.environment}-${format("disk-%03d", google_compute_disk.default.count.index + 1)}"
+  name = "${var.environment}-disk00"
   type = "pd-ssd"
   zone = "${var.zone}"
   size = "${var.disk_default_size}"
@@ -23,6 +22,7 @@ resource "google_compute_instance" "web" {
   attached_disk {
     source = "${google_compute_disk.default.self_link}"
   }
+
 
   network_interface {
     network = "${google_compute_network.web.name}"
