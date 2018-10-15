@@ -1,12 +1,13 @@
 resource "google_compute_disk" "default" {
-  name = "${var.environment}-disk00"
+  count = "${var.count_vms}"
+  name = "${var.environment}-disk-${count.index + 1}"
   type = "pd-ssd"
   zone = "${var.zone}"
   size = "${var.disk_default_size}"
 }
 
 resource "google_compute_instance" "web" {
-  count        = 1
+  count        = "${var.count_vms}"
   name         = "${var.environment}-${format("web-%03d", count.index + 1)}"
   machine_type = "${var.default_machine_type}"
   zone         = "${var.zone}"
@@ -18,11 +19,14 @@ resource "google_compute_instance" "web" {
       image = "centos-cloud/centos-7"
     }
   }
-
+/**
   attached_disk {
     source = "${google_compute_disk.default.self_link}"
   }
-
+**/
+  attached_disk {
+    source = "${element(google_compute_disk.default.*.name, count.index)}"
+  }
 
   network_interface {
     network = "${google_compute_network.web.name}"

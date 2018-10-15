@@ -13,9 +13,12 @@ variable "zone" {
 variable "environment" {
   description = "The environment that you are targetting- Instance names and disk names are computed based upon environ. name"
 }
+variable "count_vms" {
+  description = "The number of CentOS VMs to create in GCP- Each would have the same set of tools with same size individual disk sizes mounted and ext4 fs available in /data"
+}
 
 variable "disk_default_size" {
-  description = "The Disk Size in GB to be attached and available at /data as mounted ext4 fs on lvm - recommended 50 or 100"
+  description = "The Disk Size in GB to be attached to each instance and available at /data as mounted ext4 fs on lvm - recommended 50 or 100"
 }
 
 variable "default_user_name" {
