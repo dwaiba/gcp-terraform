@@ -1,7 +1,7 @@
 Table of Contents (Google Cloud with Terraform with disks)
 =================
 
-1. [Google Cloud with Terraform ](#google-cloud-with-erraform)
+1. [Google Cloud with Terraform ](#google-cloud-with-terraform)
 2. [Terraform graph](#terraform-graph)
 3. [Automatic provisioning](#automatic-provisioning)
 4. [Reporting bugs](#reporting-bugs)
@@ -14,6 +14,7 @@ Table of Contents (Google Cloud with Terraform with disks)
 3. Clone this repository
 4. Upload your public ssh key at https://console.cloud.google.com/compute/metadata/sshKeys and use the corresponding `Username` value in the console for `default_user_name` value in `vars.tf`
 5. `terraform init && terraform plan -out "run.plan" && terraform apply "run.plan"`. Please note the Environment name prompted during plan may be dev/tst or any other stage. 
+
 ### Terraform Graph
 Please generate dot format (Graphviz) terraform configuration graphs for visual representation of the repo.
 
