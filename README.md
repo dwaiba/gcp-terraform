@@ -45,7 +45,7 @@ Plan:
 
 Apply:
 
-terraform apply "run.plan"
+`terraform apply "run.plan"`
 
 Destroy:
 
