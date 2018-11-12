@@ -1,0 +1,11 @@
+- name: Provide infrastructure
+  terraform:
+    project_path: '/data/gcp-terraform/'
+    state: "{{ state }}"
+    force_init: true
+    variables:
+       count_vms: 1
+       default_user_name: "buildadmin"
+       disk_default_size: 20
+       environment: "dev"
+       projectname: "royal-mail-poc"
