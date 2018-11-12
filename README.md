@@ -25,7 +25,7 @@ Table of Contents (Google Cloud with Terraform with disks)
 
 2. Check the `project_dir` variable and change accordingly as required in `gcp-terraform_playbook.yml` file.
 
-3. Change the variables as required in `roles/terraform/tasks/main.yml`.
+3. **Change the variables as required in `roles/terraform/tasks/main.yml`.**
 
 4. Kick as `ansible-playbook -i inventory gcp-terraform_playbook.yml`.
    
