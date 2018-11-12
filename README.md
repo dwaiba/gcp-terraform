@@ -2,12 +2,13 @@ Table of Contents (Google Cloud with Terraform with disks)
 =================
 
 1. [Google Cloud with Terraform ](#google-cloud-with-terraform)
-2. [Terraform graph](#terraform-graph)
-3. [Automatic provisioning](#automatic-provisioning)
-4. [Reporting bugs](#reporting-bugs)
-5. [Patches and pull requests](#patches-and-pull-requests)
-6. [License](#license)
-7. [Code of conduct](#code-of-conduct)
+2. [Via Ansible terraform module](#via-Ansible-terraform-module)
+3. [Terraform graph](#terraform-graph)
+4. [Automatic provisioning](#automatic-provisioning)
+5. [Reporting bugs](#reporting-bugs)
+6. [Patches and pull requests](#patches-and-pull-requests)
+7. [License](#license)
+8. [Code of conduct](#code-of-conduct)
 
 # Google Cloud with Terraform
 
@@ -17,6 +18,17 @@ Table of Contents (Google Cloud with Terraform with disks)
 4. Upload your public ssh key at https://console.cloud.google.com/compute/metadata/sshKeys and use the corresponding `Username` value in the console for `default_user_name` value in `vars.tf`
 5. `terraform init && terraform plan -out "run.plan" && terraform apply "run.plan"`. Please note the Environment name prompted during plan may be dev/tst or any other stage. 
 
+### Via Ansible terraform module
+> Ansible now has a [terraform module](https://docs.ansible.com/ansible/2.7/modules/terraform_module.html) and a playbook yml file is included in this repository with a sample inventory with `localhost`
+
+1. Clone this repository in the ansible box as `cd /data && git clone https://github.com/dwaiba/gcp-terraform`.
+
+2. Check the `project_dir` variable and change accordingly as required in `gcp-terraform_playbook.yml` file.
+
+3. Change the variables as required in `roles/terraform/tasks/main.yml`.
+
+4. Kick as `ansible-playbook -i inventory gcp-terraform_playbook.yml`.
+   
 ### Terraform Graph
 Please generate dot format (Graphviz) terraform configuration graphs for visual representation of the repo.
 
