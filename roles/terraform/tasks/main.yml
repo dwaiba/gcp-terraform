@@ -5,7 +5,7 @@
     force_init: true
     variables:
        count_vms: 1
-       default_user_name: "buildadmin"
+       default_user_name: "<<your local user for using gcloud cli>>"
        disk_default_size: 20
        environment: "dev"
-       projectname: "royal-mail-poc"
+       projectname: "<<your google cloud project name>>"
