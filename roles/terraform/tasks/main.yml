@@ -9,3 +9,7 @@
        disk_default_size: 20
        environment: "dev"
        projectname: "<<your google cloud project name>>"
+  register: command_output
+- debug: msg="{{command_output.stdout}}"
+- debug: msg="{{command_output.command}}"
+- debug: msg="{{command_output.outputs}}"
