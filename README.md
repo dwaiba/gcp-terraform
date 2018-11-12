@@ -2,7 +2,7 @@ Table of Contents (Google Cloud with Terraform with disks)
 =================
 
 1. [Google Cloud with Terraform ](#google-cloud-with-terraform)
-2. [Via Ansible terraform module](#via-Ansible-terraform-module)
+2. [Via Ansible terraform module](#via-ansible-terraform-module)
 3. [Terraform graph](#terraform-graph)
 4. [Automatic provisioning](#automatic-provisioning)
 5. [Reporting bugs](#reporting-bugs)
