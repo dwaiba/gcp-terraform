@@ -1,7 +1,7 @@
 - hosts: all
   vars:
     name: Terraform project setup
-    state: absent
+    state: present
     project_dir : "/data/gcp-terraform"
     count_vms: 1
     default_user_name: "<<your username for using gcloud cli>>"
