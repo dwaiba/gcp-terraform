@@ -1,7 +1,13 @@
 - hosts: all
   vars:
     name: Terraform project setup
-    state: present
+    state: absent
     project_dir : "/data/gcp-terraform"
+    count_vms: 1
+    default_user_name: "<<your username for using gcloud cli>>"
+    disk_default_size: 20
+    gcpenvironment: "dev"
+    projectname: "<<The GCP Project name>>"
+
   roles:
     - role: terraform

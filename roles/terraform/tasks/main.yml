@@ -1,14 +1,14 @@
 - name: Provide infrastructure
   terraform:
-    project_path: '/data/gcp-terraform/'
+    project_path: "{{ project_dir }}"
     state: "{{ state }}"
     force_init: true
     variables:
-       count_vms: 1
-       default_user_name: "<<your local user for using gcloud cli>>"
-       disk_default_size: 20
-       environment: "dev"
-       projectname: "<<your google cloud project name>>"
+       count_vms: "{{ count_vms }}"
+       default_user_name: "{{ default_user_name }}"
+       disk_default_size: "{{ disk_default_size }}"
+       environment: "{{ gcpenvironment }}"
+       projectname: "{{ projectname }}"
   register: command_output
 - debug: msg="{{command_output.stdout}}"
 - debug: msg="{{command_output.command}}"
