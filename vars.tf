@@ -7,7 +7,7 @@ variable "region" {
 }
 
 variable "zone" {
-  default = "us-east1-a"
+  default = "us-east1-b"
 }
 
 variable "environment" {
