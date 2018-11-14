@@ -1,9 +1,9 @@
 resource "google_compute_disk" "default" {
   count = "${var.count_vms}"
-  name = "${var.environment}-disk-${count.index + 1}"
-  type = "pd-ssd"
-  zone = "${var.zone}"
-  size = "${var.disk_default_size}"
+  name  = "${var.environment}-disk-${count.index + 1}"
+  type  = "pd-ssd"
+  zone  = "${var.zone}"
+  size  = "${var.disk_default_size}"
 }
 
 resource "google_compute_instance" "web" {
@@ -19,11 +19,12 @@ resource "google_compute_instance" "web" {
       image = "centos-cloud/centos-7"
     }
   }
-/**
-  attached_disk {
-    source = "${google_compute_disk.default.self_link}"
-  }
-**/
+
+  /**
+    attached_disk {
+      source = "${google_compute_disk.default.self_link}"
+    }
+  **/
   attached_disk {
     source = "${element(google_compute_disk.default.*.name, count.index)}"
   }
@@ -34,6 +35,11 @@ resource "google_compute_instance" "web" {
     access_config {
       // Ephemeral IP
     }
+  }
+
+  guest_accelerator {
+    type  = "nvidia-tesla-v100"
+    count = 1
   }
 
   metadata {
@@ -54,7 +60,7 @@ output "public_ip" {
 output "connect_vm" {
   value = "gcloud compute ssh ${google_compute_instance.web.0.name} --zone ${var.zone}"
 }
+
 output "startup_script_check" {
   value = "sudo tail -100f /var/log/messages"
 }
-
