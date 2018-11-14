@@ -21,10 +21,10 @@ resource "google_compute_instance" "web" {
   }
 
   /**
-      attached_disk {
-        source = "${google_compute_disk.default.self_link}"
-      }
-    **/
+        attached_disk {
+          source = "${google_compute_disk.default.self_link}"
+        }
+      **/
   attached_disk {
     source = "${element(google_compute_disk.default.*.name, count.index)}"
   }
@@ -37,15 +37,19 @@ resource "google_compute_instance" "web" {
     }
   }
 
-  scheduling {
-    on_host_maintenance = "TERMINATE"
-  }
+  /**
+  GPU SWITCH
+  **/
+  /**
+    scheduling {
+      on_host_maintenance = "TERMINATE"
+    }
 
-  guest_accelerator {
-    type  = "nvidia-tesla-v100"
-    count = 1
-  }
-
+    guest_accelerator {
+      type  = "nvidia-tesla-v100"
+      count = 1
+    }
+  **/
   metadata {
     role = "web"
   }
