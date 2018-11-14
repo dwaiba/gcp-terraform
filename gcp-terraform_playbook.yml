@@ -8,6 +8,6 @@
     disk_default_size: 20
     gcpenvironment: "dev"
     projectname: "<<The GCP Project name>>"
-
+    
   roles:
     - role: terraform

@@ -21,7 +21,7 @@ Table of Contents (Google Cloud with Terraform with disks)
 ### Via Ansible terraform module
 > Ansible now has a [terraform module](https://docs.ansible.com/ansible/2.7/modules/terraform_module.html) and a playbook yml file is included in this repository with a sample inventory with `localhost`
 
-1. Clone this repository in the ansible box as `cd /data && git clone https://github.com/dwaiba/gcp-terraform`.
+1. Clone this repository in the ansible box as `cd /data && git clone https://github.com/dwaiba/gcp-terraform && cd gcp-terraform`.
 
 2. Check the `project_dir` variable and change accordingly as required in `gcp-terraform_playbook.yml` file.
 
