@@ -21,10 +21,10 @@ resource "google_compute_instance" "web" {
   }
 
   /**
-    attached_disk {
-      source = "${google_compute_disk.default.self_link}"
-    }
-  **/
+      attached_disk {
+        source = "${google_compute_disk.default.self_link}"
+      }
+    **/
   attached_disk {
     source = "${element(google_compute_disk.default.*.name, count.index)}"
   }
@@ -35,6 +35,10 @@ resource "google_compute_instance" "web" {
     access_config {
       // Ephemeral IP
     }
+  }
+
+  scheduling {
+    on_host_maintenance = "TERMINATE"
   }
 
   guest_accelerator {
