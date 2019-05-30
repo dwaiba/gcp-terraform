@@ -50,7 +50,7 @@ resource "google_compute_instance" "web" {
       count = 1
     }
   **/
-  metadata {
+  metadata = {
     role = "web"
   }
 
