@@ -16,7 +16,7 @@ resource "google_compute_firewall" "web" {
   // Allow incoming connections to typespeed
   allow {
     protocol = "tcp"
-    ports = ["1-65535"]
+    ports    = ["1-65535"]
   }
 
   // Allow incoming HTTP & HTTPS traffic
@@ -26,6 +26,6 @@ resource "google_compute_firewall" "web" {
   //}
   allow {
     protocol = "udp"
-    ports = ["1-65535"]
+    ports    = ["1-65535"]
   }
 }
