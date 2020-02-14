@@ -75,7 +75,7 @@ One can create a Fully HA k8s Cluster using **[k3sup](https://k3sup.dev/)**
 
 One can now use k3sup
 
-1. Obtain the Public IPs for the instances running as such `gcloud compute instances --list` or obtain just the Public IPs as `cloud compute instances list|awk '{print $5}'`
+1. Obtain the Public IPs for the instances running as such `gcloud compute instances --list` or obtain just the Public IPs as `gcloud compute instances list|awk '{print $5}'`
 
 2. one can use to create a cluster with first ip as master <pre><code>k3sup install --cluster --ip <<<b>Any of the Public IPs</b>>> --user <<<b>Your default gcloud user</b>>> --ssh-key <<<b>the location of the gcp_compute_engine private key like ~/.ssh/google_compute_engine</b>>></code></pre>
 
