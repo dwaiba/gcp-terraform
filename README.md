@@ -64,6 +64,26 @@ Apply:
 Destroy:
 
 `terraform destroy -var count_vms=2 -var default_user_name=buildadmin -var disk_default_size=20 -var environment=dev -var projectname=<<your-google-cloud-project-name>>`
+### Create a HA k8s Cluster as IAAS
+
+One can create a Fully HA k8s Cluster using **[k3sup](https://k3sup.dev/)**
+
+<pre><code><b>curl -sLSf https://get.k3sup.dev | sh && sudo install -m k3sup /usr/local/bin/</b></code></pre>
+
+One can now use k3sup
+
+1. Obtain the Public IPs for the instances running as such `gcloud compute instances --list` or obtain just the Public IPs as `cloud compute instances list|awk '{print $5}'`
+
+2. one can use to create a cluster with first ip as master <pre><code>k3sup install --cluster --ip <<<b>Any of the Public IPs</b>>> --user <<<b>Your default gcloud user</b>>> --ssh-key <<<b>the location of the gcp_compute_engine private key like ~/.ssh/google_compute_engine</b>>></code></pre>
+
+3. one can also join another IP as master or node For master: <pre><code>k3sup join --server --ip <<<b>Any of the other Public IPs</b>>> --user <<<b>Your default gcloud user</b>>> --ssh-key <<<b>the location of the gcp_compute_engine private key like ~/.ssh/google_compute_engine</b>>> --server-ip <<<b>The Server Public IP</b>>> </code></pre>
+
+or also as normal node:
+
+<pre><code>k3sup join --ip <<<b>Any of the other Public IPs</b>>> --user <<<b>Your default gcloud user</b>>> --ssh-key <<<b>the location of the gcp_compute_engine private key like ~/.ssh/google_compute_engine</b>>> --server-ip <<<b>The Server Public IP</b>>> </code></pre>
+
+
+
 
 ### Reporting bugs
 
