@@ -89,9 +89,9 @@ or one can do it on three boxes via this simple script
 <pre><code>
 terraform init && terraform plan -var count_vms=3 -var default_user_name=<<def user name>> -var disk_default_size=20 -var environment=dev -var projectname=<<your GCP Project>> -out gcp.plan && terraform apply gcp.plan
 
-export SERVER_IP=$(gcloud compute instances list|awk '{print $5}'|tail -n+4)
-gcloud compute instances list|awk '{print $5}'|tail -n+4|xargs -I {} k3sup install --cluster --ip {} --user <<def user name>> --ssh-key ~/.ssh/google_compute_engine
-gcloud compute instances list|awk '{print $5}'|tail -n+2|sed '$d'|xargs -I {} k3sup join --server-ip $SERVER_IP --ip {}  --user <<def user name>> --ssh-key ~/.ssh/google_compute_engine
+export SERVER_IP=$(gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|tail -1)
+gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|tail -1|xargs -I {} k3sup install --cluster --ip {} --user <<def user name>> --ssh-key ~/.ssh/google_compute_engine
+gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|sed '$d'|xargs -I {} k3sup join --server-ip $SERVER_IP --ip {}  --user <<def user name>> --ssh-key ~/.ssh/google_compute_engine
 export KUBECONFIG=`pwd`/kubeconfig
 kubectl get nodes -o wide
 </code></pre>
