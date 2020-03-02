@@ -85,12 +85,12 @@ or also as normal node:
 
 <pre><code>k3sup join --ip <<<b>Any of the other Public IPs</b>>> --user <<<b>Your default gcloud user</b>>> --ssh-key <<<b>the location of the gcp_compute_engine private key like ~/.ssh/google_compute_engine</b>>> --server-ip <<<b>The Server Public IP</b>>> </code></pre>
 
-or one can do it on three boxes via this simple script
+<b>or one can do it on three boxes via this simple script</b>
 <pre><code>
 terraform init && terraform plan -var count_vms=3 -var default_user_name=<<def user name>> -var disk_default_size=20 -var environment=dev -var projectname=<<your GCP Project>> -out gcp.plan && terraform apply gcp.plan
 export SERVER_IP=$(gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|tail -1)
-gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|tail -1|xargs -I {} k3sup install --cluster --ip {} --user <<def user name>> --ssh-key ~/.ssh/google_compute_engine
-gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|sed '$d'|xargs -I {} k3sup join --server-ip $SERVER_IP --ip {}  --user <<def user name>> --ssh-key ~/.ssh/google_compute_engine
+gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|tail -1|xargs -I {} k3sup install --cluster --ip {} --user $(whoami)  --ssh-key ~/.ssh/google_compute_engine --k3s-extra-args '--no-deploy traefik --docker'
+gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|sed '$d'|xargs -I {} k3sup join --server-ip $SERVER_IP --ip {}  --user $(whoami) --ssh-key ~/.ssh/google_compute_engine --k3s-extra-args '--no-deploy traefik --docker'
 export KUBECONFIG=`pwd`/kubeconfig
 kubectl get nodes -o wide -w
 kubectl apply -f pd.yaml
