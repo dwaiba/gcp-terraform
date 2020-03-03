@@ -1,18 +1,19 @@
 resource "google_compute_disk" "default" {
-  count = "${var.count_vms}"
+  count = var.count_vms
   name  = "${var.environment}-disk-${count.index + 1}"
   type  = "pd-ssd"
-  zone  = "${var.zone}"
-  size  = "${var.disk_default_size}"
+  zone  = var.zone
+  size  = var.disk_default_size
 }
 
 resource "google_compute_instance" "web" {
-  count        = "${var.count_vms}"
-  name         = "${var.environment}-${format("web-%03d", count.index + 1)}"
-  machine_type = "${var.default_machine_type}"
-  zone         = "${var.zone}"
+  count        = var.count_vms
+  name         = "${var.environment}-${format("${var.machinetag}-%03d", count.index + 1)}"
+  machine_type = var.default_machine_type
+  zone         = var.zone
 
-  tags = ["web"]
+  tags = [
+  var.machinetag]
 
   boot_disk {
     initialize_params {
@@ -26,11 +27,11 @@ resource "google_compute_instance" "web" {
         }
       **/
   attached_disk {
-    source = "${element(google_compute_disk.default.*.name, count.index)}"
+    source = element(google_compute_disk.default.*.name, count.index)
   }
 
   network_interface {
-    network = "${google_compute_network.web.name}"
+    network = google_compute_network.web.name
 
     access_config {
       // Ephemeral IP
@@ -39,17 +40,16 @@ resource "google_compute_instance" "web" {
 
   /**
   GPU SWITCH
-  **/
-  /**
-    scheduling {
-      on_host_maintenance = "TERMINATE"
-    }
 
-    guest_accelerator {
-      type  = "nvidia-tesla-v100"
-      count = 1
-    }
-  **/
+  scheduling {
+    on_host_maintenance = "TERMINATE"
+  }
+
+  guest_accelerator {
+    type  = "nvidia-tesla-v100"
+    count = 1
+  }
+   **/
   metadata = {
     role = "web"
   }

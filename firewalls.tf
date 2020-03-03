@@ -1,6 +1,6 @@
 resource "google_compute_firewall" "web" {
   name    = "${var.environment}-web"
-  network = "${google_compute_network.web.name}"
+  network = google_compute_network.web.name
 
   // Allow ping
   allow {

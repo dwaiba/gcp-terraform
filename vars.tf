@@ -1,13 +1,14 @@
 variable "default_machine_type" {
-  default = "n1-highmem-2"
+  default = "n1-standard-2"
 }
 
 variable "region" {
-  default = "us-west1"
 }
 
 variable "zone" {
-  default = "us-west1-a"
+}
+
+variable "machinetag" {
 }
 
 variable "environment" {
