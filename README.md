@@ -90,7 +90,7 @@ or also as normal node:
 terraform init && terraform plan -var count_vms=3 -var default_user_name=<<def user name>> -var disk_default_size=20 -var environment=dev -var projectname=<<your GCP Project>> -out gcp.plan && terraform apply gcp.plan
 export SERVER_IP=$(gcloud compute instances list   --filter=tags.items=rancher  --format json|jq -r '.[].networkInterfaces[].accessConfigs[].natIP'|head -n 1)
 k3sup install --cluster --ip $SERVER_IP --user $(whoami)  --ssh-key ~/.ssh/google_compute_engine --k3s-extra-args '--no-deploy traefik --docker'
-gcloud compute instances list   --filter=tags.items=rancher  --format json|jq -r '.[].networkInterfaces[].accessConfigs[].natIP'|tail -n+2|xargs -I {} k3sup join --server-ip $SERVER_IP --ip {}  --user $(whoami) --ssh-key ~/.ssh/google_compute_engine --k3s-extra-args '--no-deploy traefik --docker'
+gcloud compute instances list   --filter=tags.items=rancher  --format json|jq -r '.[].networkInterfaces[].accessConfigs[].natIP'|tail -n+2|xargs -I {} k3sup join --server-ip $SERVER_IP --ip {}  --user $(whoami) --ssh-key ~/.ssh/google_compute_engine --k3s-extra-args --docker
 export KUBECONFIG=`pwd`/kubeconfig
 kubectl get nodes -o wide -w
 kubectl apply -f pd.yaml
