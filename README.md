@@ -88,9 +88,9 @@ or also as normal node:
 <b>or one can do it on three boxes via this simple script</b>
 <pre><code>
 terraform init && terraform plan -var count_vms=3 -var default_user_name=<<def user name>> -var disk_default_size=20 -var environment=dev -var projectname=<<your GCP Project>> -out gcp.plan && terraform apply gcp.plan
-export SERVER_IP=$(gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|tail -1)
-gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|tail -1|xargs -I {} k3sup install --cluster --ip {} --user $(whoami)  --ssh-key ~/.ssh/google_compute_engine --k3s-extra-args '--no-deploy traefik --docker'
-gcloud compute instances list   --filter=tags.items=web   --format="get(networkInterfaces[0].accessConfigs.natIP)"|sed '$d'|xargs -I {} k3sup join --server-ip $SERVER_IP --ip {}  --user $(whoami) --ssh-key ~/.ssh/google_compute_engine --k3s-extra-args '--no-deploy traefik --docker'
+export SERVER_IP=$(gcloud compute instances list   --filter=tags.items=rancher  --format json|jq -r '.[].networkInterfaces[].accessConfigs[].natIP'|head -n 1)
+k3sup install --cluster --ip $SERVER_IP --user $(whoami)  --ssh-key ~/.ssh/google_compute_engine --k3s-extra-args '--no-deploy traefik --docker'
+gcloud compute instances list   --filter=tags.items=rancher  --format json|jq -r '.[].networkInterfaces[].accessConfigs[].natIP'|tail -n+2|xargs -I {} k3sup join --server-ip $SERVER_IP --ip {}  --user $(whoami) --ssh-key ~/.ssh/google_compute_engine --k3s-extra-args '--no-deploy traefik --docker'
 export KUBECONFIG=`pwd`/kubeconfig
 kubectl get nodes -o wide -w
 kubectl apply -f pd.yaml
