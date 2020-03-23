@@ -1,5 +1,5 @@
 variable "default_machine_type" {
-  default = "n1-standard-2"
+  default = "n1-highmem-8"
 }
 
 variable "region" {
