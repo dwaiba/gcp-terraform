@@ -1,10 +1,15 @@
 Table of Contents (Google Cloud with Terraform with disks)
 =================
 
-1. [Google Cloud with Terraform ](#google-cloud-with-terraform)
-2. [Via Ansible terraform module](#via-ansible-terraform-module)
-3. [Terraform graph](#terraform-graph)
-4. [Automatic provisioning](#automatic-provisioning)
+- [Table of Contents (Google Cloud with Terraform with disks)](#table-of-contents-google-cloud-with-terraform-with-disks)
+- [Google Cloud with Terraform](#google-cloud-with-terraform)
+    - [Via Ansible terraform module](#via-ansible-terraform-module)
+    - [Automatic Provisioning](#automatic-provisioning)
+    - [Create a HA k8s Cluster as IAAS](#create-a-ha-k8s-cluster-as-iaas)
+    - [Reporting bugs](#reporting-bugs)
+    - [Patches and pull requests](#patches-and-pull-requests)
+    - [License](#license)
+    - [Code of Conduct](#code-of-conduct)
 
    [Create a HA k8s Cluster as IAAS](#create-a-ha-k8s-cluster-as-iaas)
    
@@ -31,18 +36,6 @@ Table of Contents (Google Cloud with Terraform with disks)
 3. **Change the variables as required in `gcp-terraform_playbook.yml`.**
 
 4. Kick as `ansible-playbook -i inventory gcp-terraform_playbook.yml`.
-   
-### Terraform Graph
-Please generate dot format (Graphviz) terraform configuration graphs for visual representation of the repo.
-
-`terraform graph | dot -Tsvg > graph.svg`
-
-Also, one can use [Blast Radius](https://github.com/28mm/blast-radius) on live initialized terraform project to view graph.
-Please shoot in dockerized format:
-
-`docker ps -a|grep blast-radius|awk '{print $1}'|xargs docker kill && rm -rf gcp-terraform && git clone https://github.com/dwaiba/gcp-terraform && cd gcp-terraform && terraform init && docker run --cap-add=SYS_ADMIN -dit --rm -p 5001:5000 -v $(pwd):/workdir:ro 28mm/blast-radius && cd ../`
-
- A live example is [here](http://buildservers.westeurope.cloudapp.azure.com:5001/) for this project. 
 
  ### Automatic Provisioning
 
@@ -50,7 +43,7 @@ https://github.com/dwaiba/gcp-terraform
 
 Pre-reqs: 
 1. gcloud should be installed. Silent install is - 
-`export $USERNAME="<<you_user_name>>" && export SHARE_DATA=/data && su -c "export SHARE_DATA=/data && export CLOUDSDK_INSTALL_DIR=$SHARE_DATA export CLOUDSDK_CORE_DISABLE_PROMPTS=1 && curl https://sdk.cloud.google.com | bash" $USER_NAME && echo "source $SHARE_DATA/google-cloud-sdk/path.bash.inc" >> /etc/profile.d/gcloud.sh && echo "source $SHARE_DATA/google-cloud-sdk/completion.bash.inc" >> /etc/profile.d/gcloud.sh &&`
+```export USERNAME="<<you_user_name>>" && export SHARE_DATA=/data && su -c "export SHARE_DATA=/data && export CLOUDSDK_INSTALL_DIR=$SHARE_DATA export CLOUDSDK_CORE_DISABLE_PROMPTS=1 && curl https://sdk.cloud.google.com | bash" $USERNAME && echo "export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python" /etc/profile.d/gcloud.sh && echo "source $SHARE_DATA/google-cloud-sdk/path.bash.inc" >> /etc/profile.d/gcloud.sh && echo "source $SHARE_DATA/google-cloud-sdk/completion.bash.inc" >> /etc/profile.d/gcloud.sh &&```
 
 2. Please create Service Credential of type JSON via https://console.cloud.google.com/apis/credentials, download and save as google.json in credentials folder of the gcp-terraform
 
@@ -58,15 +51,25 @@ Pre-reqs:
 
 Plan:
 
-`terraform init && terraform plan -var count_vms=2 -var default_user_name=<<your local username>> -var disk_default_size=20 -var environment=dev -var projectname=<<your-google-cloud-project-name>> -out "run.plan"`
+```terraform init && terraform plan -var count_vms=1 -var default_user_name=Your_User_Name -var disk_default_size=100 -var environment=dev -var region=europe-west4 -var machinetag=dev -var zone=europe-west4-a -var projectname=The_Project_Name -out "run.plan"```
 
 Apply:
 
-`terraform apply "run.plan"`
+```terraform apply "run.plan"```
 
 Destroy:
 
-`terraform destroy -var count_vms=2 -var default_user_name=buildadmin -var disk_default_size=20 -var environment=dev -var projectname=<<your-google-cloud-project-name>>`
+```terraform destroy -var count_vms=1 -var default_user_name=Your_User_Name -var disk_default_size=100 -var environment=dev -var region=europe-west4 -var machinetag=dev -var zone=europe-west4-a -var projectname=The_Project_Name```
+
+
+       RKernel Jupyter Installation
+       R
+       From the R Console
+       ```install.packages('IRkernel', repos="https://cran.rstudio.com")```
+       
+       ```Rscript -e 'IRkernel::installspec()' && nohup jupyter notebook --ip 0.0.0.0 >/dev/null 2>&1'```
+
+      ```nohup jupyter notebook --ip 0.0.0.0 >nohup.out 2>&1 & ```
 ### Create a HA k8s Cluster as IAAS
 
 One can create a Fully HA k8s Cluster using **[k3sup](https://k3sup.dev/)**

@@ -11,3 +11,4 @@
 /*.retry
 /.idea
 kubeconfig
+/.terraform.tfstate*
