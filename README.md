@@ -62,14 +62,14 @@ Destroy:
 ```terraform destroy -var count_vms=1 -var default_user_name=Your_User_Name -var disk_default_size=100 -var environment=dev -var region=europe-west4 -var machinetag=dev -var zone=europe-west4-a -var projectname=The_Project_Name```
 
 
-       RKernel Jupyter Installation
-       R
-       From the R Console
-       ```install.packages('IRkernel', repos="https://cran.rstudio.com")```
-       
-       ```Rscript -e 'IRkernel::installspec()' && nohup jupyter notebook --ip 0.0.0.0 >/dev/null 2>&1'```
+RKernel Jupyter Installation
+R
+From the R Console
+```install.packages('IRkernel', repos="https://cran.rstudio.com")```
 
-      ```nohup jupyter notebook --ip 0.0.0.0 >nohup.out 2>&1 & ```
+```Rscript -e 'IRkernel::installspec()' && nohup jupyter notebook --ip 0.0.0.0 >/dev/null 2>&1'```
+
+```nohup jupyter notebook --ip 0.0.0.0 >nohup.out 2>&1 & ```
 ### Create a HA k8s Cluster as IAAS
 
 One can create a Fully HA k8s Cluster using **[k3sup](https://k3sup.dev/)**
