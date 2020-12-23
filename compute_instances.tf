@@ -22,7 +22,7 @@ resource "google_compute_instance" "web" {
 
   boot_disk {
     initialize_params {
-      image = var.distro == "centos" ? "centos-cloud/centos-8" : "ubuntu-os-cloud/ubuntu-1604-lts"
+      image = var.distro == "centos" ? "centos-cloud/centos-8" : "ubuntu-os-cloud/ubuntu-2004-lts"
     }
   }
 
@@ -71,7 +71,7 @@ output "vms" {
 }
 
 output "startup_script_check" {
-  value = "sudo tail -100f /var/log/messages"
+  value = "sudo tail -100f /var/log/messages (for CentOS / RHEL) OR sudo tail -100f/var/log/syslog (for Ubuntu)"
 }
 
 output "ephemeralips" {
