@@ -1,0 +1,8 @@
+ipyparallel
+sklearn
+xlrd
+numpy
+matplotlib
+pandas
+pandoc
+jupyter
