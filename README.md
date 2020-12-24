@@ -5,6 +5,7 @@ Table of Contents (Google Cloud with Terraform with disks)
 - [Google Cloud with Terraform](#google-cloud-with-terraform)
     - [Via Ansible terraform module](#via-ansible-terraform-module)
     - [Automatic Provisioning](#automatic-provisioning)
+      - [RKernel Jupyter Installation](#rkernel-jupyter-installation)
     - [Create a HA k8s Cluster as IAAS](#create-a-ha-k8s-cluster-as-iaas)
     - [Reporting bugs](#reporting-bugs)
     - [Patches and pull requests](#patches-and-pull-requests)
@@ -51,25 +52,49 @@ Pre-reqs:
 
 Plan:
 
-```terraform init && terraform plan -var count_vms=1 -var default_user_name=Your_User_Name -var disk_default_size=100 -var environment=dev -var region=europe-west4 -var machinetag=dev -var zone=europe-west4-a -var projectname=The_Project_Name -out "run.plan"```
+```
+terraform init && terraform plan -var distro=ubuntu_or_centos count_vms=1 -var default_user_name=Your_User_Name -var disk_default_size=100 -var environment=dev -var region=europe-west4 -var machinetag=dev -var zone=europe-west4-a -var projectname=The_Project_Name -out "run.plan"
+```
 
 Apply:
 
-```terraform apply "run.plan"```
+```
+terraform apply "run.plan"
+```
 
 Destroy:
 
 ```terraform destroy -var count_vms=1 -var default_user_name=Your_User_Name -var disk_default_size=100 -var environment=dev -var region=europe-west4 -var machinetag=dev -var zone=europe-west4-a -var projectname=The_Project_Name```
 
 
-RKernel Jupyter Installation
-R
-From the R Console
-```install.packages('IRkernel', repos="https://cran.rstudio.com")```
+#### RKernel Jupyter Installation
+This is presently only for distro ubuntu
+```
+## Kill the notebook server
 
-```Rscript -e 'IRkernel::installspec()' && nohup jupyter notebook --ip 0.0.0.0 >/dev/null 2>&1'```
+ps -eaf|grep jupyter|awk '{print $2}'|head -n 1|xargs kill -9
 
-```nohup jupyter notebook --ip 0.0.0.0 >nohup.out 2>&1 & ```
+## Install IRkernel package
+
+install_pack_irk='install.packages("IRkernel", repos="https://cran.rstudio.com")'
+
+echo $install_pack_irk | sudo R --no-save
+
+## ir installspec
+
+Rscript -e 'IRkernel::installspec()'
+
+## start the notebook server
+cd /data
+
+jupyter notebook --ip 0.0.0.0> /data/jupyter-notebook-server.log 2>&1 &
+
+## Get the token from /data/jupyter-notebook-server.log
+
+## login to <ip>:8888 with the token 
+
+```
+
 ### Create a HA k8s Cluster as IAAS
 
 One can create a Fully HA k8s Cluster using **[k3sup](https://k3sup.dev/)**
